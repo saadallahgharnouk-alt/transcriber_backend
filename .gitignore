@@ -1,5 +1,28 @@
+# --- Python ---
 .env
 __pycache__/
 *.pyc
-frontend/
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+
+# --- Models / temp media ---
 models/
+temp_*
+*.tmp
+
+# --- Node / Vite ---
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+.DS_Store
+
+# --- Editors ---
+.vscode/
+.idea/
