@@ -3,6 +3,7 @@ import { ReactLenis } from '@studio-freight/react-lenis'
 import BackgroundFX from './components/BackgroundFX'
 import Header from './components/Header'
 import Hero from './components/Hero'
+import Marquee from './components/Marquee'
 import UploadSection from './components/UploadSection'
 import Features from './components/Features'
 import FAQ from './components/FAQ'
@@ -32,6 +33,7 @@ export default function App() {
       <Header healthy={healthy} />
       <main className="relative">
         <Hero />
+        <Marquee />
         <UploadSection />
         <Features />
         <FAQ />
