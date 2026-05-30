@@ -290,9 +290,12 @@ export default function TranscriptionResult({ result, file, onReset }) {
                 exit={{ opacity: 0, y: -8 }}
                 className="max-h-[60vh] overflow-y-auto rounded-2xl bg-black/20 border border-white/5 p-5 sm:p-6"
               >
-                <p className="text-base sm:text-lg leading-relaxed text-ink-100 whitespace-pre-wrap">
-                  {result.text || 'No transcript text returned.'}
-                </p>
+                <KaraokeTranscript
+                  words={result.words}
+                  text={result.text}
+                  currentTime={currentTime}
+                  onSeek={seekTo}
+                />
               </motion.div>
             )}
 
@@ -432,6 +435,73 @@ function StatCard({ label, value, icon }) {
           {value}
         </p>
       </div>
+    </div>
+  )
+}
+
+
+
+/**
+ * Word-level karaoke transcript. Highlights the active word as audio plays.
+ * Falls back to plain text if word data isn't available.
+ */
+function KaraokeTranscript({ words, text, currentTime, onSeek }) {
+  const containerRef = useRef(null)
+  const activeWordRef = useRef(null)
+
+  const activeIdx = useMemo(() => {
+    if (!Array.isArray(words) || words.length === 0) return -1
+    return words.findIndex(
+      (w) => currentTime >= w.start && currentTime < w.end
+    )
+  }, [words, currentTime])
+
+  // Auto-scroll the active word into view (smooth, throttled by browser)
+  useEffect(() => {
+    if (activeIdx < 0) return
+    const el = activeWordRef.current
+    const container = containerRef.current
+    if (!el || !container) return
+    const elRect = el.getBoundingClientRect()
+    const cRect = container.getBoundingClientRect()
+    const offset = elRect.top - cRect.top - cRect.height / 2 + elRect.height / 2
+    if (Math.abs(offset) > 80) {
+      container.scrollBy({ top: offset, behavior: 'smooth' })
+    }
+  }, [activeIdx])
+
+  if (!Array.isArray(words) || words.length === 0) {
+    return (
+      <p className="text-base sm:text-lg leading-relaxed text-ink-100 whitespace-pre-wrap">
+        {text || 'No transcript text returned.'}
+      </p>
+    )
+  }
+
+  return (
+    <div ref={containerRef} className="text-base sm:text-lg leading-relaxed">
+      {words.map((w, i) => {
+        const active = i === activeIdx
+        const past = i < activeIdx
+        return (
+          <span
+            key={i}
+            ref={active ? activeWordRef : null}
+            onClick={() => onSeek(w.start)}
+            className={cn(
+              'cursor-pointer rounded px-0.5 transition-colors duration-150',
+              active &&
+                'bg-[var(--brand-1)]/40 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]',
+              !active && past && 'text-ink-100',
+              !active && !past && 'text-ink-200/60 hover:text-white'
+            )}
+            title={`Jump to ${formatTime(w.start)}`}
+          >
+            {w.word}
+            {' '}
+          </span>
+        )
+      })}
     </div>
   )
 }

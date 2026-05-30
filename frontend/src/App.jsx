@@ -3,10 +3,12 @@ import { ReactLenis } from '@studio-freight/react-lenis'
 import BackgroundFX from './components/BackgroundFX'
 import Header from './components/Header'
 import Hero from './components/Hero'
+import Marquee from './components/Marquee'
 import UploadSection from './components/UploadSection'
 import Features from './components/Features'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
+import ThemePicker from './components/ThemePicker'
 import { checkHealth } from './lib/api'
 
 export default function App() {
@@ -32,11 +34,13 @@ export default function App() {
       <Header healthy={healthy} />
       <main className="relative">
         <Hero />
+        <Marquee />
         <UploadSection />
         <Features />
         <FAQ />
       </main>
       <Footer />
+      <ThemePicker />
     </ReactLenis>
   )
 }
