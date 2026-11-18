@@ -69,7 +69,7 @@ export default function UploadSection() {
           </h2>
         </div>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {stage === 'done' && result ? (
             <motion.div
               key="result"

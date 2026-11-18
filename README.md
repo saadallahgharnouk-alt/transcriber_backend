@@ -10,6 +10,11 @@ Echo turns audio and video into timestamped transcripts and subtitle files. Uplo
 2. The FastAPI backend validates the file extension, enforces a 25 MiB upload limit, and sends the media to Groq’s `whisper-large-v3` model.
 3. The API returns transcript text, duration, and segment and word timestamps. The browser uses the timestamps for synchronized playback and subtitle exports.
 
+## My contributions
+
+- Built the FastAPI upload and transcription flow, including file validation, language hints, and a response with segment and word timestamps.
+- Built the React transcript viewer with synchronized media playback, click-to-seek controls, and TXT, SRT, WebVTT, and JSON exports.
+
 ## Run locally
 
 You’ll need Python 3.10 or later, Node.js 22 or later, and a [Groq API key](https://console.groq.com/keys) to transcribe your own files.
