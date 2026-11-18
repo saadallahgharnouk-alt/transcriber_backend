@@ -107,8 +107,8 @@ export default function Features() {
             className="md:col-span-2"
             accent="from-rose-400 to-orange-500"
             icon={Lock}
-            title="Nothing stored"
-            body="Streamed in, transcribed, deleted. Zero retention."
+            title="Media processing"
+            body="Uploads go to Groq for transcription. The API cleans up its temporary upload file after processing."
           />
 
           {/* Stats (1x1) */}

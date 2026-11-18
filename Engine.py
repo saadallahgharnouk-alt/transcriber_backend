@@ -98,9 +98,8 @@ def parse_segments(transcription) -> list[dict]:
         text  = chunk["text"].strip()
 
         if not text:
-            continue 
+            continue
 
-        print(f"   [{start:.2f}s → {end:.2f}s]  {text}")
         segments.append({
             "start": start,
             "end":   end,
